@@ -1,0 +1,18 @@
+type Review {
+    id: ID! @id
+    createdAt: DateTime! @createdAt
+    igdbId: Int!
+    igdbTitle: String!
+    title: String!
+    content: String!
+    score: Int!
+    postedBy: User
+}
+
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+  reviews: [Review!]! @relation(link: INLINE)
+}

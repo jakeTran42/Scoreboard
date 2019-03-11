@@ -1,0 +1,32 @@
+type Query {
+  info(context: String!): String!
+  reviews: [Review!]!
+}
+
+type Mutation {
+    postReview(igdbId: Int!, igdbTitle: String!, title: String!, content: String!, score: Int!): Review!
+    signup(email: String!, password: String!, name: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
+}
+
+type Review {
+    id: ID!
+    igdbId: Int!
+    igdbTitle: String!
+    title: String!
+    content: String!
+    score: Int!
+    postedBy: User
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  reviews: [Review!]!
+}
