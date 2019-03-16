@@ -11,6 +11,10 @@ type AggregateUser {
   count: Int!
 }
 
+type AggregateVote {
+  count: Int!
+}
+
 type BatchPayload {
   count: Long!
 }
@@ -32,6 +36,11 @@ type Mutation {
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createVote(data: VoteCreateInput!): Vote!
+  updateVote(data: VoteUpdateInput!, where: VoteWhereUniqueInput!): Vote
+  upsertVote(where: VoteWhereUniqueInput!, create: VoteCreateInput!, update: VoteUpdateInput!): Vote!
+  deleteVote(where: VoteWhereUniqueInput!): Vote
+  deleteManyVotes(where: VoteWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -58,6 +67,9 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  vote(where: VoteWhereUniqueInput!): Vote
+  votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote]!
+  votesConnection(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VoteConnection!
   node(id: ID!): Node
 }
 
@@ -70,6 +82,7 @@ type Review {
   content: String!
   score: Int!
   postedBy: User
+  votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
 }
 
 type ReviewConnection {
@@ -85,11 +98,17 @@ input ReviewCreateInput {
   content: String!
   score: Int!
   postedBy: UserCreateOneWithoutReviewsInput
+  votes: VoteCreateManyWithoutReviewInput
 }
 
 input ReviewCreateManyWithoutPostedByInput {
   create: [ReviewCreateWithoutPostedByInput!]
   connect: [ReviewWhereUniqueInput!]
+}
+
+input ReviewCreateOneWithoutVotesInput {
+  create: ReviewCreateWithoutVotesInput
+  connect: ReviewWhereUniqueInput
 }
 
 input ReviewCreateWithoutPostedByInput {
@@ -98,6 +117,16 @@ input ReviewCreateWithoutPostedByInput {
   title: String!
   content: String!
   score: Int!
+  votes: VoteCreateManyWithoutReviewInput
+}
+
+input ReviewCreateWithoutVotesInput {
+  igdbId: Int!
+  igdbTitle: String!
+  title: String!
+  content: String!
+  score: Int!
+  postedBy: UserCreateOneWithoutReviewsInput
 }
 
 type ReviewEdge {
@@ -241,6 +270,7 @@ input ReviewUpdateInput {
   content: String
   score: Int
   postedBy: UserUpdateOneWithoutReviewsInput
+  votes: VoteUpdateManyWithoutReviewInput
 }
 
 input ReviewUpdateManyDataInput {
@@ -276,17 +306,39 @@ input ReviewUpdateManyWithWhereNestedInput {
   data: ReviewUpdateManyDataInput!
 }
 
+input ReviewUpdateOneRequiredWithoutVotesInput {
+  create: ReviewCreateWithoutVotesInput
+  update: ReviewUpdateWithoutVotesDataInput
+  upsert: ReviewUpsertWithoutVotesInput
+  connect: ReviewWhereUniqueInput
+}
+
 input ReviewUpdateWithoutPostedByDataInput {
   igdbId: Int
   igdbTitle: String
   title: String
   content: String
   score: Int
+  votes: VoteUpdateManyWithoutReviewInput
+}
+
+input ReviewUpdateWithoutVotesDataInput {
+  igdbId: Int
+  igdbTitle: String
+  title: String
+  content: String
+  score: Int
+  postedBy: UserUpdateOneWithoutReviewsInput
 }
 
 input ReviewUpdateWithWhereUniqueWithoutPostedByInput {
   where: ReviewWhereUniqueInput!
   data: ReviewUpdateWithoutPostedByDataInput!
+}
+
+input ReviewUpsertWithoutVotesInput {
+  update: ReviewUpdateWithoutVotesDataInput!
+  create: ReviewCreateWithoutVotesInput!
 }
 
 input ReviewUpsertWithWhereUniqueWithoutPostedByInput {
@@ -377,6 +429,7 @@ input ReviewWhereInput {
   score_gt: Int
   score_gte: Int
   postedBy: UserWhereInput
+  votes_some: VoteWhereInput
   AND: [ReviewWhereInput!]
 }
 
@@ -387,10 +440,12 @@ input ReviewWhereUniqueInput {
 type Subscription {
   review(where: ReviewSubscriptionWhereInput): ReviewSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  vote(where: VoteSubscriptionWhereInput): VoteSubscriptionPayload
 }
 
 type User {
   id: ID!
+  username: String!
   name: String!
   email: String!
   password: String!
@@ -404,10 +459,16 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  username: String!
   name: String!
   email: String!
   password: String!
   reviews: ReviewCreateManyWithoutPostedByInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutReviewsInput {
@@ -416,6 +477,7 @@ input UserCreateOneWithoutReviewsInput {
 }
 
 input UserCreateWithoutReviewsInput {
+  username: String!
   name: String!
   email: String!
   password: String!
@@ -429,6 +491,8 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
+  username_ASC
+  username_DESC
   name_ASC
   name_DESC
   email_ASC
@@ -439,6 +503,7 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
+  username: String!
   name: String!
   email: String!
   password: String!
@@ -460,7 +525,16 @@ input UserSubscriptionWhereInput {
   AND: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  username: String
+  name: String
+  email: String
+  password: String
+  reviews: ReviewUpdateManyWithoutPostedByInput
+}
+
 input UserUpdateInput {
+  username: String
   name: String
   email: String
   password: String
@@ -468,9 +542,17 @@ input UserUpdateInput {
 }
 
 input UserUpdateManyMutationInput {
+  username: String
   name: String
   email: String
   password: String
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneWithoutReviewsInput {
@@ -483,9 +565,15 @@ input UserUpdateOneWithoutReviewsInput {
 }
 
 input UserUpdateWithoutReviewsDataInput {
+  username: String
   name: String
   email: String
   password: String
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutReviewsInput {
@@ -508,6 +596,20 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -556,7 +658,139 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  username: String
   email: String
+}
+
+type Vote {
+  id: ID!
+  review: Review!
+  user: User!
+}
+
+type VoteConnection {
+  pageInfo: PageInfo!
+  edges: [VoteEdge]!
+  aggregate: AggregateVote!
+}
+
+input VoteCreateInput {
+  review: ReviewCreateOneWithoutVotesInput!
+  user: UserCreateOneInput!
+}
+
+input VoteCreateManyWithoutReviewInput {
+  create: [VoteCreateWithoutReviewInput!]
+  connect: [VoteWhereUniqueInput!]
+}
+
+input VoteCreateWithoutReviewInput {
+  user: UserCreateOneInput!
+}
+
+type VoteEdge {
+  node: Vote!
+  cursor: String!
+}
+
+enum VoteOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type VotePreviousValues {
+  id: ID!
+}
+
+input VoteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [VoteScalarWhereInput!]
+  OR: [VoteScalarWhereInput!]
+  NOT: [VoteScalarWhereInput!]
+}
+
+type VoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Vote
+  updatedFields: [String!]
+  previousValues: VotePreviousValues
+}
+
+input VoteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: VoteWhereInput
+  AND: [VoteSubscriptionWhereInput!]
+}
+
+input VoteUpdateInput {
+  review: ReviewUpdateOneRequiredWithoutVotesInput
+  user: UserUpdateOneRequiredInput
+}
+
+input VoteUpdateManyWithoutReviewInput {
+  create: [VoteCreateWithoutReviewInput!]
+  delete: [VoteWhereUniqueInput!]
+  connect: [VoteWhereUniqueInput!]
+  set: [VoteWhereUniqueInput!]
+  disconnect: [VoteWhereUniqueInput!]
+  update: [VoteUpdateWithWhereUniqueWithoutReviewInput!]
+  upsert: [VoteUpsertWithWhereUniqueWithoutReviewInput!]
+  deleteMany: [VoteScalarWhereInput!]
+}
+
+input VoteUpdateWithoutReviewDataInput {
+  user: UserUpdateOneRequiredInput
+}
+
+input VoteUpdateWithWhereUniqueWithoutReviewInput {
+  where: VoteWhereUniqueInput!
+  data: VoteUpdateWithoutReviewDataInput!
+}
+
+input VoteUpsertWithWhereUniqueWithoutReviewInput {
+  where: VoteWhereUniqueInput!
+  update: VoteUpdateWithoutReviewDataInput!
+  create: VoteCreateWithoutReviewInput!
+}
+
+input VoteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  review: ReviewWhereInput
+  user: UserWhereInput
+  AND: [VoteWhereInput!]
+}
+
+input VoteWhereUniqueInput {
+  id: ID
 }
 `
       }

@@ -1,12 +1,19 @@
 type Query {
   info(context: String!): String!
-  reviews: [Review!]!
+  gameReviews(filter: String, skip: Int, first: Int, orderBy: ReviewOrderByInput): ReviewFeed!
+  igdbSearch(path: String, search: String, fields: String, filter: String, limit: Int, sort: String): [Game!]!
 }
 
 type Mutation {
     postReview(igdbId: Int!, igdbTitle: String!, title: String!, content: String!, score: Int!): Review!
-    signup(email: String!, password: String!, name: String!): AuthPayload
-    login(email: String!, password: String!): AuthPayload
+    signup(username: String!, email: String!, password: String!, name: String!): AuthPayload
+    login(username: String, email: String, password: String!): AuthPayload
+    vote(reviewId: ID!): Vote
+}
+
+type ReviewFeed {
+  reviews: [Review!]!
+  count: Int!
 }
 
 type Review {
@@ -17,6 +24,7 @@ type Review {
     content: String!
     score: Int!
     postedBy: User
+    votes: [Vote!]!
 }
 
 type AuthPayload {
@@ -26,7 +34,30 @@ type AuthPayload {
 
 type User {
   id: ID!
+  username: String!
   name: String!
   email: String!
   reviews: [Review!]!
+}
+
+type Vote {
+  id: ID!
+  review: Review!
+  user: User!
+}
+
+enum ReviewOrderByInput {
+  title_ASC
+  title_DESC
+  score_ASC
+  score_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+# IGDB API call transform into SDL
+
+type Game {
+  id: Int!
+  title: String!
 }

@@ -7,12 +7,20 @@ type Review {
     content: String!
     score: Int!
     postedBy: User
+    votes: [Vote!]!
 }
 
 type User {
   id: ID! @id
+  username: String! @unique
   name: String!
   email: String! @unique
   password: String!
   reviews: [Review!]! @relation(link: INLINE)
+}
+
+type Vote {
+  id: ID! @id
+  review: Review! @relation(link: INLINE)
+  user: User! @relation(link: INLINE)
 }
