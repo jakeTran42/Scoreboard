@@ -59,5 +59,20 @@ enum ReviewOrderByInput {
 
 type Game {
   id: Int!
-  title: String!
+  name: String!
+  slug: String!
+  category: String
+  cover: String
+  collection: String
+  first_release_date: Int
+  genres: [String]!
+  involved_companies: [String]!
+  platforms: [String]!
+  popularity: Float
+  rating: Float
+  summary: String
+  themes: [String]!
+  total_rating: Float
+  total_rating_count: Int
+  status: String
 }
