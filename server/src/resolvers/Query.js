@@ -24,14 +24,14 @@ async function gameReviews(parent, args, context, info) {
 async function igdbSearch(parent, args) {
 
     const category = ['Main Game', 'DLC', 'Expansion', 'Bundle', 'Standalone Expansion']
-    const status = ['Release', 'Undetermined', 'Alpha', 'Beta', 'Early Access', 'Offline', 'Cancelled']
+    const status = ['Release', 'N/A', 'Alpha', 'Beta', 'Early Access', 'Offline', 'Cancelled']
     const gameData = await igdbAPI(args)
 
     const transformedData = gameData.map((game) => {
         return  { 
                     ...game,
                     category: category[game.category] || null,
-                    cover: game.cover ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg` : `https://images.igdb.com/igdb/image/upload/t_cover_big/nocover_qhhlj6.jpg`,
+                    coverId: game.cover ? `${game.cover.image_id}` : `nocover_qhhlj6`,
                     collection: game.collection ? game.collection.name : null,
                     status: game.status || status[1],
                     first_release_date: game.first_release_date || null,

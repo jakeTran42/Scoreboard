@@ -26,11 +26,14 @@ async function login(parent, args, context, info) {
     }
     // 1
 
-    if (args.username) {
-        user = await (context.prisma.user({ username: args.username }))
-    } else {
-        user = await (context.prisma.user({ email: args.email }))
-    }
+    const user = (await (context.prisma.user({ username: args.loginIdentifier }))) ||
+                 (await (context.prisma.user({ email: args.loginIdentifier })))
+
+    // if (args.username) {
+    //     user = await (context.prisma.user({ username: args.username }))
+    // } else {
+    //     user = await (context.prisma.user({ email: args.email }))
+    // }
 
     if (!user) {
         throw new Error('No such user found')

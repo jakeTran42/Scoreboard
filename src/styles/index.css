@@ -17,6 +17,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: Verdana, Geneva, sans-serif;
+  background-color: #191919;
+  color: aliceblue;
 }
 
 input {

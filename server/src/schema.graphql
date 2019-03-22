@@ -7,7 +7,7 @@ type Query {
 type Mutation {
     postReview(igdbId: Int!, igdbTitle: String!, title: String!, content: String!, score: Int!): Review!
     signup(username: String!, email: String!, password: String!, name: String!): AuthPayload
-    login(username: String, email: String, password: String!): AuthPayload
+    login(loginIdentifier: String!, password: String!): AuthPayload
     vote(reviewId: ID!): Vote
 }
 
@@ -62,7 +62,7 @@ type Game {
   name: String!
   slug: String!
   category: String
-  cover: String
+  coverId: String
   collection: String
   first_release_date: Int
   genres: [String]!

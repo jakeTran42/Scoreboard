@@ -7,9 +7,6 @@ const Mutation = require('./resolvers/Mutation')
 const User = require('./resolvers/User')
 const Review = require('./resolvers/Review')
 const Vote = require('./resolvers/Vote')
-const igdbAPI = require('../datasource/igdbAPI')
-
-// igdbAPI(args = {})
 
 // 2
 const resolvers = {

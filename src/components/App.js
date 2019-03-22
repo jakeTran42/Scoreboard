@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
+// import logo from '../logo.svg';
 import '../styles/App.css';
+import { Switch, Route } from 'react-router-dom';
+
+// Components Imports
+import GameSearcher from './Games/GameSearcher';
+import ReviewList from './Reviews/ReviewList';
+import CreateReview from './Reviews/CreateReview';
+import Header from './Headers/Header';
+import Login from './AUTH/Login';
+import Review from './Reviews/Review/Review';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="center w85">
+        <Header />
+        <div className="ph3 pv1">
+          <Switch>
+            <Route exact path="/game/search" component={GameSearcher} />
+            <Route exact path="/reviews" component={ReviewList} />
+            <Route exact path="/create" component={CreateReview} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/review/:reviewId" render={(props) => <Review review={props.location.state.data.postReview}/>}/>
+          </Switch>
+        </div>
       </div>
-    );
+    )
   }
 }
 
