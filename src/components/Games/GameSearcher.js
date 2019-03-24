@@ -34,7 +34,7 @@ class GameSeacher extends Component {
         super(props);
         this.state = { 
             path: 'games',
-            filter: `first_release_date > ${setReleasedDate} & rating > 80`,
+            filter: `first_release_date > ${setReleasedDate} & total_rating > 80`,
             limit: 5
         }
     }
@@ -49,34 +49,33 @@ class GameSeacher extends Component {
             sort: 'popularity desc'
         }
 
-
         return (
         <div className="container">
             <label>Search: </label>
             <input type="text"
             onChange={e => this.setState(
                 {
-                    filter: e.target.value ? `name ~ *"${e.target.value}"*` : `first_release_date > ${setReleasedDate} & rating > 80`,
+                    filter: e.target.value ? `name ~ *"${e.target.value}"* & total_rating >= 0` : `first_release_date > ${setReleasedDate} & total_rating > 80`,
                     limit: e.target.value ? 50 : 5
                 })
             }
             />
             <Query query={GAME_SEARCH_QUERY} variables={vars}>
                 {({ loading, error, data }) => {
-                    if (loading) return <div className="loader"></div>
-                    if (error) return <div>Error</div>
-                
+                    if (loading)
+                        return <div className ="loaderWrapper"><div className="loader"></div></div>
+                    if (error)
+                        return <div>Error</div>
                     const gamesToRender = data.igdbSearch
-                    return (
-                        <div>
-                            <GamesFeed games={gamesToRender}/>
-                        </div>
-                    )
+                    return (<div>
+                        <GamesFeed games={gamesToRender} />
+                    </div>)
                 }}
             </Query>
         </div>
         )
     }
+
 }
  
 export default GameSeacher;

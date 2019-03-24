@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './GamesFeed.css';
 import Game from '../Game/Game'
+import { Link } from 'react-router-dom'
 
 class GamesFeed extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class GamesFeed extends Component {
     }
 
     render() {
+
         return (
             <div>
                 {this.state.gameMetaData ?
@@ -20,24 +22,24 @@ class GamesFeed extends Component {
                     this.showFeeds()
                 }
             </div>
-        );
+        )
     }
 
     showFeeds() {
-        return <div className="feedContainer">
+        return (<div className="feedContainer">
             {this.props.games.map((game) => 
             <div onClick={() => this.setState({ gameMetaData: game })} key={game.id} className="eachGame">
                 <div className="gameFeedImages">
                     <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.coverId}.jpg`} alt={''}/>
                 </div>
                 <div className="metaData">
-                    {game.id} | {game.name}
+                    {game.id} | {game.name} | <Link to={{pathname: '/create', state: {id: game.id, name: game.name}}} >Create a Review for this game</Link>
                 </div>
                 <div className="scoreContainer">
                     {game.total_rating}
                 </div>
             </div>)}
-        </div>;
+        </div>)
     }
 }
 
