@@ -1,19 +1,63 @@
 .feedContainer {
+    height: 100%;
     display: inline-block;
 }
 
-.eachGame {
-    width: 1000px;
-    height: 150px;
-    /* border: solid 2px black; */
-    margin: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.games-data {
+    margin: 30px;
+    display: grid;
+    height: 160px;
+    grid-template-columns: 1fr 6fr 1.4fr;
+    grid-template-rows: 100%;
+    column-gap: 20px;
+    
 }
 
-.metaData {
-    border: solid 1px grey;
+.meta-data {
+    border-bottom: solid 1px grey;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.metaData:hover {
+    cursor: pointer;
+}
+
+#data-points {
+    width: 75%;
+    height: 100%;
+    padding-right: 10px;
+}
+
+#links-traversal {
+    width: 25%;
+    height: 100%;
+}
+
+#name-tag {
+    font-weight: bold;
+    color: teal;
+}
+
+#name-tag:hover {
+    color: #f4426b;
+    cursor: grab;
+    text-decoration-line: underline;
+}
+
+#genre-tag, #platform-tag, #theme-tag {
+    width: 500px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.scoreContainer {
     width: 100%;
     height: 100%;
     display: flex;
@@ -23,13 +67,14 @@
 
 .gameFeedImages {
     height: 100%;
-    /* object-fit: contain; */
+    /* width: 100%; */
+    object-fit: contain;
     border-radius: 5px;
 }
 
 img {
     width: 100%;
     height: 100%;
-    border-radius: 2.5px;
+    border-radius: 3px;
     /* object-fit: contain; */
 }

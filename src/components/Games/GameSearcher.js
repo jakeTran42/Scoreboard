@@ -9,7 +9,8 @@ const GAME_SEARCH_QUERY = gql`
     query GameQuery($path: String, $filter: String, $fields: String, $limit: Int, $sort: String) {
         igdbSearch(path: $path, filter: $filter, fields: $fields, limit: $limit, sort: $sort){
             id,
-            name
+            name,
+            slug,
             popularity,
             coverId,
             collection,
@@ -51,21 +52,26 @@ class GameSeacher extends Component {
 
         return (
         <div className="container">
-            <label>Search: </label>
-            <input type="text"
-            onChange={e => this.setState(
-                {
-                    filter: e.target.value ? `name ~ *"${e.target.value}"* & total_rating >= 0` : `first_release_date > ${setReleasedDate} & total_rating > 80`,
-                    limit: e.target.value ? 50 : 5
-                })
-            }
-            />
+            <div className="searcherWrapper">
+                <div className="searcher">
+                    <label id="search-label" style={{paddingRight: '10px'}}>Search  </label>
+                    <form id="search-form">
+                        <input type="text"
+                        id="search-input"
+                        placeholder="Find a game"
+                        onChange={e => this.setState(
+                            {
+                                filter: e.target.value ? `slug ~ *"${(e.target.value).replace(" ", "-").toLowerCase()}"* & total_rating >= 0` : `first_release_date > ${setReleasedDate} & total_rating > 80`,
+                                limit: e.target.value ? 50 : 5
+                            })}
+                        />
+                    </form>
+                </div>
+            </div>
             <Query query={GAME_SEARCH_QUERY} variables={vars}>
                 {({ loading, error, data }) => {
-                    if (loading)
-                        return <div className ="loaderWrapper"><div className="loader"></div></div>
-                    if (error)
-                        return <div>Error</div>
+                    if (loading) return <div className ="loaderWrapper"><div className="loader"></div></div>
+                    if (error) return <div>Error</div>
                     const gamesToRender = data.igdbSearch
                     return (<div>
                         <GamesFeed games={gamesToRender} />

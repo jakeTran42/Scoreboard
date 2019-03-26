@@ -37,6 +37,7 @@ class CreateReview extends Component {
         const vars = {igdbId: Number(this.props.game.id), igdbTitle: this.props.game.name, ...this.state, score: Number(this.state.score)}
         return ( 
             <div>
+                <div onClick={() => this.props.history.goBack()}>Find another game instead</div>
                 <div className="flex flex-column mt3">
 
                     <input className="mb2" value={this.state.title} 

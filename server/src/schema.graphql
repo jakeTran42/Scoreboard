@@ -1,6 +1,7 @@
 type Query {
   info(context: String!): String!
   gameReviews(filter: String, skip: Int, first: Int, orderBy: ReviewOrderByInput): ReviewFeed!
+  gameReviewById(filter: ID): ReviewFeed!
   igdbSearch(path: String, search: String, fields: String, filter: String, limit: Int, sort: String): [Game!]!
 }
 

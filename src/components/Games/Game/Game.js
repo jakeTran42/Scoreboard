@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import './Game.css'
+import '../VisualComponents/RatingBar';
+import RatingBar from '../VisualComponents/RatingBar';
 
 class Game extends Component {
     // state = { }
-
-
     render() {
-        const {id, name, popularity, coverId, collection, first_release_date, genres, platforms, summary, themes, total_rating, total_rating_count, status} = {...this.props.game}
+
+        if(!this.props.game) return <div>{this.props.history.push('/404')}</div>
+        
+        const { id, name, popularity, coverId, collection, first_release_date, genres, platforms, summary, themes, total_rating, total_rating_count, status } = {...this.props.game}
         return ( 
             <div>
-                <div onClick={() => this.props.history.go(0)} >Go back</div>
+                <RatingBar containerWidth={'100px'}>{total_rating.toFixed(0)}</RatingBar>
+                <div onClick={this.props.handler} >Go back</div>
                 <Link to={{pathname: '/create', state: {id: id, name: name}}} >Create a Review for this game</Link>
                 <img src={`https://images.igdb.com/igdb/image/upload/t_1080p/${coverId}.jpg`} />
                 <br/>{id} <br/>

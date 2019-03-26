@@ -11,6 +11,7 @@ import Header from './Headers/Header';
 import Login from './AUTH/Login';
 import Review from './Reviews/Review/Review';
 import NotFound from './RouteConfig/404'
+import ErrorPage from './RouteConfig/ErrorPage'
 
 class App extends Component {
   render() {
@@ -24,7 +25,9 @@ class App extends Component {
             <Route exact path="/reviews" component={ReviewList} />
             <Route exact path="/create" render={(props) => <CreateReview game={props.location.state}/>} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/review/:reviewId" render={(props) => <Review review={props.location.state.postReview}/>}/>
+            <Route exact path="/review/:reviewId" component={Review}/>
+            <Route exact path="/error" component={ErrorPage} />
+            <Route path="/404" component={NotFound} />
             <Route component={NotFound} />
           </Switch>
         </div>

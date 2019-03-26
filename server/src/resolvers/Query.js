@@ -21,6 +21,23 @@ async function gameReviews(parent, args, context, info) {
     }
 }
 
+async function gameReviewById(parent, args, context, info) {
+    const where =  args.filter ? { id: args.filter } : {}
+    const reviews = await context.prisma.reviews({
+        where
+    })
+    const count = await context.prisma
+        .reviewsConnection({
+        where,
+        })
+        .aggregate()
+        .count()
+    return {
+        reviews,
+        count,
+    }
+}
+
 async function igdbSearch(parent, args) {
 
     const category = ['Main Game', 'DLC', 'Expansion', 'Bundle', 'Standalone Expansion']
@@ -60,5 +77,6 @@ async function igdbSearch(parent, args) {
   
 module.exports = {
     gameReviews,
+    gameReviewById,
     igdbSearch
 }

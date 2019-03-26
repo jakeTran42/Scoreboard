@@ -1,0 +1,17 @@
+.reviewListContainer {
+    /* background-color: #191919; */
+    /* background-color: #252331; */
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+.reviewListLoaderWrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+}
