@@ -25,7 +25,9 @@ class CreateReview extends Component {
         content: '',
         score: ''
      }
+
     render() {
+        console.log(this.state.score)
         
         // Redirect User to Login page if auth not confirmed
         const token = localStorage.getItem(AUTH_TOKEN)

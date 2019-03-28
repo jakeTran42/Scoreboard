@@ -22,6 +22,7 @@ const GAME_SEARCH_QUERY = gql`
             total_rating,
             total_rating_count,
             status
+            involved_companies
         }
     }
 `
@@ -36,8 +37,18 @@ class GameSeacher extends Component {
         this.state = { 
             path: 'games',
             filter: `first_release_date > ${setReleasedDate} & total_rating > 80`,
-            limit: 5
+            limit: 10
         }
+    }
+
+    handleSearch(e) {
+        if(e.key === "Enter") {
+            e.preventDefault()
+        } 
+        this.setState({
+            filter: e.target.value ? `slug ~ *"${(e.target.value).replace(" ", "-").toLowerCase()}"* & total_rating >= 0` : `first_release_date > ${setReleasedDate} & total_rating > 80`,
+            limit: e.target.value ? 50 : 10
+        })
     }
     
     render() { 
@@ -45,7 +56,7 @@ class GameSeacher extends Component {
         const vars = {
             path: this.state.path,
             filter: this.state.filter,
-            fields: 'id,name,slug,popularity,cover.image_id,collection.name,first_release_date,genres.name,platforms.name,summary,themes.name,total_rating,total_rating_count,status',
+            fields: 'id,name,slug,popularity,cover.image_id,collection.name,first_release_date,genres.name,platforms.name,summary,themes.name,total_rating,total_rating_count,status,involved_companies.company.name',
             limit: this.state.limit,
             sort: 'popularity desc'
         }
@@ -59,11 +70,8 @@ class GameSeacher extends Component {
                         <input type="text"
                         id="search-input"
                         placeholder="Find a game"
-                        onChange={e => this.setState(
-                            {
-                                filter: e.target.value ? `slug ~ *"${(e.target.value).replace(" ", "-").toLowerCase()}"* & total_rating >= 0` : `first_release_date > ${setReleasedDate} & total_rating > 80`,
-                                limit: e.target.value ? 50 : 5
-                            })}
+                        onKeyPress ={(e) => this.handleSearch(e)}
+                        onChange={e => this.handleSearch(e)}
                         />
                     </form>
                 </div>

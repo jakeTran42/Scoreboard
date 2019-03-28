@@ -45,6 +45,7 @@ async function igdbSearch(parent, args) {
     const gameData = await igdbAPI(args)
 
     const transformedData = gameData.map((game) => {
+        // console.log(game.involved_companies)
         return  { 
                     ...game,
                     category: category[game.category] || null,

@@ -11,19 +11,29 @@ class GamesFeed extends Component {
         this.goBackHandler = this.goBackHandler.bind(this)
     }
 
-    goBackHandler(){
-        this.setState({ gameMetaData: null })
-    }
-
     render() {
         return (
             <div>
                 {this.state.gameMetaData ?
-                    <Game game={this.state.gameMetaData} handler={this.goBackHandler} /> :
+                    <Game game={this.state.gameMetaData} goBackHandler={this.goBackHandler} /> :
                     this.showFeeds()
                 }
             </div>
         )
+    }
+
+    goBackHandler(){
+        this.setState({ gameMetaData: null })
+    }
+
+    checkNSFW(arr) {
+        if(arr) {
+            if (arr.includes("Erotic")) {
+                console.log("Erotic!")
+            }
+            return arr.includes("Erotic")
+        }
+        return false
     }
 
     showFeeds() {
@@ -36,11 +46,20 @@ class GamesFeed extends Component {
 
                 <div className="meta-data">
                     <div id="data-points">
-                        <div id="name-tag" onClick={() => this.setState({ gameMetaData: game })}>{game.name}</div>
-                        <div id="genre-tag">{game.genres.join(" | ")}</div>
-                        <div id="platform-tag">{game.platforms.join(" | ")}</div>
-                        <div id="theme-tag">{game.themes.join(" | ")}</div>
+                        <div id="title-tag"><div id="game-name" onClick={() => this.setState({ gameMetaData: game })} >{game.name}</div>{this.checkNSFW(game.themes) ? <div id="nsfw-tag">nfsw</div> : ''}</div>
+                        <div id="genre-tags">{game.genres.map((genre) => <div id="tag" key={genre}>{genre}</div>)}</div>
+                        <div id="theme-tags">{game.themes.map((theme) => <div id="tag" key={theme}>{theme}</div>)}</div>
+                        <div id="platform-tags">{game.platforms.map((platform) => {
+                            if(platform === "PC (Microsoft Windows)") {
+                                return <div key={platform} id="tag">PC</div>
+                            }
+                            return <div id="tag" key={platform}>{platform}</div>
+                        })}</div>
                         <div id="game-released-date">Released: {(new Date(game.first_release_date * 1000)).toLocaleDateString()}</div>
+
+                        {/* <div id="genre-tag">{game.genres.join(" | ")}</div>
+                        <div id="theme-tag">{game.themes.join(" | ")}</div>
+                        <div id="platform-tag">{game.platforms.join(" | ")}</div> */}
                     </div>
                     <div id="links-traversal">
                         <Link to={{pathname: '/create', state: {id: game.id, name: game.name}}} >Create Review</Link>
@@ -48,7 +67,7 @@ class GamesFeed extends Component {
                 </div>
 
                 <div className="scoreContainer" >
-                    <RatingBar containerWidth={'70%'}>{game.total_rating}</RatingBar>
+                    <RatingBar containerWidth={'70%'} fillStyle={'#f4f7f6'}>{game.total_rating}</RatingBar>
                 </div>
             </div>)}
         </div>)

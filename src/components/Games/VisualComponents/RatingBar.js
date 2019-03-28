@@ -26,7 +26,7 @@ const RatingBar = (props) => {
     const color = hsl_col_perc(total_rating)
     
     return (
-        <div style={{ width: `${props.containerWidth}` }}>
+        <div className="circular-bar" style={{ width: `${props.containerWidth}` }}>
             <CircularProgressbar
             initialAnimation={true}
             percentage={total_rating}
@@ -36,7 +36,7 @@ const RatingBar = (props) => {
             styles={{
                 background: {
                 // fill: '#ffffff',
-                fill: '#f4f7f6'
+                fill: `${props.fillStyle}`
                 },
                 text: {
                     fill: '#f44168',
@@ -48,7 +48,7 @@ const RatingBar = (props) => {
                 }
             }}
             />
-            <div style={{display: 'flex', justifyContent: 'center'}}>{rating_(total_rating)}</div>
+            <div style={{display: 'flex', justifyContent: 'center', fontWeight: '500'}}>{rating_(total_rating)}</div>
         </div>
     );
 }

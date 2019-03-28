@@ -12,6 +12,7 @@ import Login from './AUTH/Login';
 import Review from './Reviews/Review/Review';
 import NotFound from './RouteConfig/404'
 import ErrorPage from './RouteConfig/ErrorPage'
+// import Medium from './Medium'
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/review/:reviewId" component={Review}/>
             <Route exact path="/error" component={ErrorPage} />
+            {/* <Route exact path="/medium" component={Medium} /> */}
             <Route path="/404" component={NotFound} />
             <Route component={NotFound} />
           </Switch>
