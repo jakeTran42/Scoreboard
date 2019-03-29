@@ -40,12 +40,11 @@ async function gameReviewById(parent, args, context, info) {
 
 async function igdbSearch(parent, args) {
 
-    const category = ['Main Game', 'DLC', 'Expansion', 'Bundle', 'Standalone Expansion']
+    const category = ['Main Game', 'DLC', 'Expansion', 'Bundle', 'Standalone-Expansion']
     const status = ['Release', 'N/A', 'Alpha', 'Beta', 'Early Access', 'Offline', 'Cancelled']
     const gameData = await igdbAPI(args)
 
     const transformedData = gameData.map((game) => {
-        // console.log(game.involved_companies)
         return  { 
                     ...game,
                     category: category[game.category] || null,
@@ -62,7 +61,8 @@ async function igdbSearch(parent, args) {
                         return genre.name
                     }) : [],
                     involved_companies: game.involved_companies ? game.involved_companies.map((company) => {
-                        return company.company.name
+                        const companies = {name: company.company.name, developer: company.developer}
+                        return companies
                     }) : [],
                     platforms: game.platforms ? game.platforms.map((platform) => {
                         return platform.name

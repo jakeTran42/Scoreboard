@@ -27,13 +27,9 @@ class GamesFeed extends Component {
     }
 
     checkNSFW(arr) {
-        if(arr) {
-            if (arr.includes("Erotic")) {
-                console.log("Erotic!")
-            }
+        if (arr) {
             return arr.includes("Erotic")
         }
-        return false
     }
 
     showFeeds() {
@@ -56,11 +52,8 @@ class GamesFeed extends Component {
                             return <div id="tag" key={platform}>{platform}</div>
                         })}</div>
                         <div id="game-released-date">Released: {(new Date(game.first_release_date * 1000)).toLocaleDateString()}</div>
-
-                        {/* <div id="genre-tag">{game.genres.join(" | ")}</div>
-                        <div id="theme-tag">{game.themes.join(" | ")}</div>
-                        <div id="platform-tag">{game.platforms.join(" | ")}</div> */}
                     </div>
+
                     <div id="links-traversal">
                         <Link to={{pathname: '/create', state: {id: game.id, name: game.name}}} >Create Review</Link>
                     </div>

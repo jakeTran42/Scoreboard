@@ -29,30 +29,18 @@
     border-radius: 3px; 
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-start; */
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
-}
-
-.right-display-wrapper {
-    flex: 2 1 1em;
-    padding: 1%;
-    margin: 1%;
-    border: solid 1px;
+    box-shadow: 0 10px 13px rgba(0, 0, 0, .5);
+    display: table;
 }
 
 div.left-display-wrapper img {
     padding: 2%;
     max-width: 100%;
-    max-height: 60%;
+    max-height: 500px;
     border-radius: 10px;
-}
-
-#game-name-1 {
-    text-align: center;
-    font-weight: 600;
-    padding: 10px 5px 10px 5px;
-    color: #ed3b4d;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15);
 }
 
 #general-info-div {
@@ -67,6 +55,32 @@ div.left-display-wrapper img {
     box-shadow: 0 3px 1px rgba(0, 0, 0, 0.2);
 }
 
+/* .circular-div > h5 {
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    color: #ed3b4d;
+    font-size: 1em;
+    font-weight: 300;
+} */
+
+.rating-ct-wrapper {
+    margin: 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.rating-ct-wrapper> h5 {
+    margin: 0;
+    color: #ed3b4d;
+    font-size: 1em;
+    font-weight: 300;
+}
+
+#total-rating-ct {
+    color: #4ee881 !important;
+}
+
 #dev-div {
     display: flex;
     flex-direction: column;
@@ -79,6 +93,9 @@ div.left-display-wrapper img {
 #developers-wrapper {
     font-size: .7em;
     vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #developers-list {
@@ -92,6 +109,7 @@ div.left-display-wrapper img {
 #released-date-div {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     font-weight: 300;
     padding: 10px;
     text-align: center;
@@ -106,3 +124,121 @@ div.left-display-wrapper img {
     justify-content: center;
     align-items: center;
 }
+
+.right-display-wrapper {
+    border-radius: 3px;
+    background: #252331;
+    flex: 2 1 1em;
+    padding: 1%;
+    margin: 1%;
+    color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 0 12px 13px rgba(0, 0, 0, 0.5);
+    display: table;
+}
+
+.catergory-name-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#body-name-tag {
+    font-size: 1.4em;
+    text-align: center;
+    font-weight: 600;
+    padding: 10px 10px 10px 5px;
+    color: #ed3b4d;
+}
+
+
+.catergory-tag {
+    white-space: nowrap;
+    font-size: .7em;
+    text-align: center;
+    font-weight: 300;
+    padding: 4px 4px 4px 4px;
+    border-radius: 15px 5px 15px 5px;
+}
+
+.Main {
+    border: solid 2px #4ee881;
+    color: #4ee881;
+}
+
+.DLC {
+    border: solid 2px #298fd8;
+    color: #298fd8;
+}
+
+.Expansion {
+    border: solid 2px #453cf2;
+    color: #453cf2;
+}
+
+.Bundle {
+    border: solid 2px #e0d131;
+    color: #e0d131;
+}
+
+.Standalone-Expansion {
+    border: solid 2px #e03131;
+    color: #e03131;
+}
+
+.summary-tag {
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: center; */
+}
+
+.summary-tag > h2 {
+    padding: 0;
+    margin: 1%;
+    font-size: 1.1em;
+    color: #ed3b4d;
+}
+
+.summary-tag > p {
+    line-height: 1.2em;
+    color: aliceblue;
+    font-weight: 300;
+    margin: 7px;
+}
+
+.keywords-container {
+    padding: 2%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.keywords-container > div > h2 {
+    padding: 0;
+    margin: 1%;
+    font-size: 1.1em;
+    color: #ed3b4d;
+}
+
+.keywords-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: .8em;
+    padding: 0 1% 0 1%;
+}
+
+#platforms-tag, #genres-tag, #themes-tag {
+    border: solid 1px white;
+    margin: 3px 3px 3px 3px;
+    padding: 0 5px 0 5px;
+    white-space: nowrap;
+    
+}
+

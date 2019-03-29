@@ -8,21 +8,25 @@ import './GameSearcher.css'
 const GAME_SEARCH_QUERY = gql`
     query GameQuery($path: String, $filter: String, $fields: String, $limit: Int, $sort: String) {
         igdbSearch(path: $path, filter: $filter, fields: $fields, limit: $limit, sort: $sort){
-            id,
-            name,
-            slug,
-            popularity,
-            coverId,
-            collection,
-            first_release_date,
-            genres,
-            platforms,
-            summary,
-            themes,
-            total_rating,
+            id
+            name
+            slug
+            popularity
+            coverId
+            collection
+            first_release_date
+            genres
+            platforms
+            summary
+            themes
+            total_rating
             total_rating_count,
             status
-            involved_companies
+            category
+            involved_companies {
+                name
+                developer
+            }
         }
     }
 `
@@ -56,7 +60,7 @@ class GameSeacher extends Component {
         const vars = {
             path: this.state.path,
             filter: this.state.filter,
-            fields: 'id,name,slug,popularity,cover.image_id,collection.name,first_release_date,genres.name,platforms.name,summary,themes.name,total_rating,total_rating_count,status,involved_companies.company.name',
+            fields: 'id,name,slug,popularity,cover.image_id,collection.name,first_release_date,genres.name,platforms.name,summary,themes.name,total_rating,total_rating_count,status,involved_companies.company.name,involved_companies.developer,category',
             limit: this.state.limit,
             sort: 'popularity desc'
         }
@@ -65,7 +69,7 @@ class GameSeacher extends Component {
         <div className="container">
             <div className="searcherWrapper">
                 <div className="searcher">
-                    <label id="search-label" style={{paddingRight: '10px'}}>Search  </label>
+                    <label id="search-label" style={{paddingRight: '10px'}}>Search </label>
                     <form id="search-form">
                         <input type="text"
                         id="search-input"

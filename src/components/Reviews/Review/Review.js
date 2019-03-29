@@ -13,7 +13,7 @@ const REVIEW_BY_ID_QUERY = gql`
             score
         }
     }
-    }
+}
 `
 
 class Review extends Component {

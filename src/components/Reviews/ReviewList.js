@@ -16,7 +16,7 @@ const REVIEW_QUERY = gql`
 }
 `
 class ReviewList extends Component {
-    state = {}
+    // state = {}
     render() {
         return (
             <div className="reviewListContainer">
@@ -35,7 +35,7 @@ class ReviewList extends Component {
                             )
                         }
                     }
-                </Query>}
+                </Query>
             </div> 
          );
     }

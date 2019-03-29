@@ -67,7 +67,7 @@ type Game {
   collection: String
   first_release_date: Int
   genres: [String]!
-  involved_companies: [String]!
+  involved_companies: [Company]!
   platforms: [String]!
   popularity: Float
   rating: Float
@@ -76,4 +76,9 @@ type Game {
   total_rating: Float
   total_rating_count: Int
   status: String
+}
+
+type Company {
+  name: String
+  developer: Boolean
 }
