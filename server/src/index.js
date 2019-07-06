@@ -19,7 +19,7 @@ const resolvers = {
 
 // 3
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+  typeDefs: './schema.graphql',
   resolvers,
   context: request => {
     return {

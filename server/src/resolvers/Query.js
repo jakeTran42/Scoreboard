@@ -42,6 +42,7 @@ async function igdbSearch(parent, args) {
 
     const category = ['Main Game', 'DLC', 'Expansion', 'Bundle', 'Standalone-Expansion']
     const status = ['Release', 'N/A', 'Alpha', 'Beta', 'Early Access', 'Offline', 'Cancelled']
+    const acceptedWebsites = {1: 'official', 2: 'wikia', 13: 'steam', 14: 'reddit', 15: 'discord'}
     const gameData = await igdbAPI(args)
 
     const transformedData = gameData.map((game) => {
@@ -70,9 +71,29 @@ async function igdbSearch(parent, args) {
                     themes: game.themes ? game.themes.map((theme) => {
                         return theme.name
                     }) : [],
+                    websites: game.websites 
+                    ? game.websites.filter((site) => {
+                        let keys = Object.keys(acceptedWebsites).map(Number)
+                        return keys.includes(site.category)
+                    })
+                    : [],
+                    game_modes: game.game_modes
+                    ? game.game_modes.map((mode) => ({name: mode.name, slug: mode.slug}))
+                    : [],
+                    dlcs: game.dlcs
+                    ? game.dlcs.map((dlc) => ({type: 'DLC', id: dlc.id, slug: dlc.slug, name: dlc.name}))
+                    : [],
+                    bundles: game.bundles
+                    ? game.bundles.map((bundle) => ({type: 'Bundle', id: bundle.id, slug: bundle.slug, name: bundle.name}))
+                    : [],
+                    expansions: game.expansions
+                    ? game.expansions.map((expansion) => ({type: 'Expansion', id: expansion.id, slug: expansion.slug, name: expansion.name}))
+                    : [],
+                    screenshots: game.screenshots
+                    ? game.screenshots.map((image) => image.image_id)
+                    : [],
                 }
     })
-
     return transformedData
 }
   

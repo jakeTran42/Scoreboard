@@ -11,12 +11,40 @@ const REVIEW_QUERY = gql`
             title
             content
             score
+            postedBy {
+                username
+            }
+            igdbTitle
         }
     }
 }
 `
 class ReviewList extends Component {
     // state = {}
+
+    displayReview = (review) => {
+        return(
+            <div className="review-wrapper">
+                <div className="title-preview">
+                    <div id="game-title" style={{color: "#f4426b"}}>{review.igdbTitle}</div>
+                    <div id="review-title">
+                        {review.title}
+                    </div>
+                </div>
+                <div className="review-preview">
+                   <div id="review-username">
+                       <span style={{color: "#f4426b"}}>Posted By </span>
+                       <span> &nbsp; • {review.postedBy.username}</span>
+                   </div>
+                   <div id="review-score">
+                       <div style={{color: "#f4426b"}}>User Score</div>
+                       <div> &nbsp; • {review.score}/10</div>
+                   </div>
+                </div>
+            </div>
+        )
+    }
+
     render() {
         return (
             <div className="reviewListContainer">
@@ -27,9 +55,10 @@ class ReviewList extends Component {
                             if (error) return <div>Error</div>
                             const reviewsToRender = data.gameReviews.reviews
                             return (
-                                <div>
+                                <div className="reviews-container">
                                     {reviewsToRender.map((review) => <div key={review.id} onClick={() => this.props.history.push(`/review/${review.id}`)}>
-                                        {review.id} | {review.title} | {review.content} | {review.score}
+                                        {console.log(review)}
+                                        {this.displayReview(review)}
                                     </div>)}
                                 </div>
                             )

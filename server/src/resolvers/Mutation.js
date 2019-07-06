@@ -12,7 +12,8 @@ async function signup(parent, args, context, info) {
     // 2
     const user = await context.prisma.createUser({ ...args, password })
     // 3
-    const token = jwt.sign({ userId: user.id }, APP_SECRET)
+    // const token = jwt.sign({ userId: user.id }, APP_SECRET)
+    const token = jwt.sign({ userId: user.id }, 'iwillgameforever')
     // 4
     return {
       token,
@@ -45,7 +46,8 @@ async function login(parent, args, context, info) {
         throw new Error('Invalid password')
     }
 
-    const token = jwt.sign({ userId: user.id }, APP_SECRET)
+    // const token = jwt.sign({ userId: user.id }, APP_SECRET)
+    const token = jwt.sign({ userId: user.id }, 'iwillgameforever')
 
     // 3
     return {

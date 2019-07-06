@@ -21,7 +21,7 @@ class App extends Component {
         <Header />
         <div className="appWrapper">
           <Switch>
-            <Route exact path="/" />
+            <Route exact path="/" component={GameSearcher} />
             <Route exact path="/game/search" component={GameSearcher} />
             <Route exact path="/reviews" component={ReviewList} />
             <Route exact path="/create" render={(props) => <CreateReview game={props.location.state}/>} />

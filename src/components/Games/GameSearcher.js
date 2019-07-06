@@ -23,9 +23,28 @@ const GAME_SEARCH_QUERY = gql`
             total_rating_count,
             status
             category
+            screenshots
             involved_companies {
                 name
                 developer
+            }
+            websites {
+                category
+                url
+            }
+            game_modes {
+                name
+                slug
+            }
+            dlcs {
+                type
+                id
+                name
+            }
+            expansions {
+                type
+                id
+                name
             }
         }
     }
@@ -38,29 +57,34 @@ const setReleasedDate = (d / 1000).toFixed(0)
 class GameSeacher extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             path: 'games',
-            filter: `first_release_date > ${setReleasedDate} & total_rating > 80`,
+            filter: this.props.location.state ? this.props.location.state.filter : `first_release_date > ${setReleasedDate} & total_rating > 80 & total_rating_count > 50`,
             limit: 10
         }
+        // this.handleChildrenFiltering = this.handleChildrenFiltering.bind(this)
     }
 
-    handleSearch(e) {
+    handleSearch(e){
         if(e.key === "Enter") {
             e.preventDefault()
+            this.setState({
+                filter: e.target.value ? `slug ~ *"${(e.target.value).replace(" ", "-").toLowerCase()}"* & total_rating >= 0` : `first_release_date > ${setReleasedDate} & total_rating > 80 & total_rating_count > 50`,
+                limit: e.target.value ? 20 : 10
+            })
         } 
-        this.setState({
-            filter: e.target.value ? `slug ~ *"${(e.target.value).replace(" ", "-").toLowerCase()}"* & total_rating >= 0` : `first_release_date > ${setReleasedDate} & total_rating > 80`,
-            limit: e.target.value ? 50 : 10
-        })
+    }
+
+    handleChildrenFiltering = (filterQuery) => {
+        console.log("Calling")
+        this.setState({filter: filterQuery})
     }
     
-    render() { 
-
+    render() {
         const vars = {
             path: this.state.path,
             filter: this.state.filter,
-            fields: 'id,name,slug,popularity,cover.image_id,collection.name,first_release_date,genres.name,platforms.name,summary,themes.name,total_rating,total_rating_count,status,involved_companies.company.name,involved_companies.developer,category',
+            fields: 'id,name,slug,popularity,cover.image_id,collection.name,first_release_date,genres.name,platforms.name,summary,themes.name,total_rating,total_rating_count,status,involved_companies.company.name,involved_companies.developer,category,websites.url,websites.category,game_modes.name,game_modes.slug,dlcs.id,dlcs.slug,dlcs.name,expansions.id,expansions.slug,expansions.name,screenshots.image_id',
             limit: this.state.limit,
             sort: 'popularity desc'
         }
@@ -75,7 +99,7 @@ class GameSeacher extends Component {
                         id="search-input"
                         placeholder="Find a game"
                         onKeyPress ={(e) => this.handleSearch(e)}
-                        onChange={e => this.handleSearch(e)}
+                        // onChange={e => this.handleSearch(e)}
                         />
                     </form>
                 </div>
@@ -86,7 +110,7 @@ class GameSeacher extends Component {
                     if (error) return <div>Error</div>
                     const gamesToRender = data.igdbSearch
                     return (<div>
-                        <GamesFeed games={gamesToRender} />
+                        <GamesFeed games={gamesToRender} handleFiltering={this.handleChildrenFiltering} />
                     </div>)
                 }}
             </Query>

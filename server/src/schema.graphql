@@ -75,10 +75,33 @@ type Game {
   themes: [String]!
   total_rating: Float
   total_rating_count: Int
-  status: String
+  status: String,
+  websites: [Website]!
+  game_modes: [Game_Mode]!
+  dlcs: [extraContent]!
+  expansions: [extraContent]
+  screenshots: [String!]!
+}
+
+type extraContent {
+  type: String
+  id: Int
+  slug: String
+  name: String
 }
 
 type Company {
   name: String
   developer: Boolean
+}
+
+type Website {
+  category: Int
+  trusted: Boolean
+  url: String
+}
+
+type Game_Mode {
+  name: String
+  slug: String
 }

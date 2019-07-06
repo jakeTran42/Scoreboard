@@ -11,6 +11,16 @@ class GamesFeed extends Component {
         this.goBackHandler = this.goBackHandler.bind(this)
     }
 
+    goBackHandler(){
+        this.setState({ gameMetaData: null })
+    }
+
+    checkNSFW(arr) {
+        if (arr) {
+            return arr.includes("Erotic")
+        }
+    }
+
     render() {
         return (
             <div>
@@ -22,15 +32,6 @@ class GamesFeed extends Component {
         )
     }
 
-    goBackHandler(){
-        this.setState({ gameMetaData: null })
-    }
-
-    checkNSFW(arr) {
-        if (arr) {
-            return arr.includes("Erotic")
-        }
-    }
 
     showFeeds() {
         return (<div className="feedContainer">
@@ -43,14 +44,8 @@ class GamesFeed extends Component {
                 <div className="meta-data">
                     <div id="data-points">
                         <div id="title-tag"><div id="game-name" onClick={() => this.setState({ gameMetaData: game })} >{game.name}</div>{this.checkNSFW(game.themes) ? <div id="nsfw-tag">nfsw</div> : ''}</div>
-                        <div id="genre-tags">{game.genres.map((genre) => <div id="tag" key={genre}>{genre}</div>)}</div>
+                        <div id="mode-tags">{game.game_modes.map((mode) => <div id="tag" key={mode.slug}>{mode.name}</div>)}</div>
                         <div id="theme-tags">{game.themes.map((theme) => <div id="tag" key={theme}>{theme}</div>)}</div>
-                        <div id="platform-tags">{game.platforms.map((platform) => {
-                            if(platform === "PC (Microsoft Windows)") {
-                                return <div key={platform} id="tag">PC</div>
-                            }
-                            return <div id="tag" key={platform}>{platform}</div>
-                        })}</div>
                         <div id="game-released-date">Released: {(new Date(game.first_release_date * 1000)).toLocaleDateString()}</div>
                     </div>
 

@@ -1,0 +1,30 @@
+/* .ReactGridGallery_tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px white;
+    margin: 5px;
+} */
+
+/* .ReactGridGallery_tile-viewport > img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+} */
+
+/* .ReactGridGallery_tile {
+    background: black;
+    margin: 10px;
+    overflow: hidden;
+} */
+
+.ReactGridGallery_tile {
+    background: none !important;
+}
+
+img {
+    margin-left: 0 !important;
+    border: 1px solid aliceblue;
+    /* margin: 5px !important; */
+}

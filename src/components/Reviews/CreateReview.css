@@ -1,0 +1,99 @@
+.review-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 70px;
+    background: #252331;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    color: aliceblue;
+}
+
+.submit-game-title {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 50px; */
+    margin-bottom: 50px;
+}
+
+.review-title-input {
+    width: 600px;
+    height: 50px;
+    padding: 10px;
+    margin: 20px;
+    outline: none;
+    border: none;
+    text-align: center;
+}
+
+.review-content-input {
+    border: none;
+    width: 500px;
+    height: 300px;
+    padding: 10px;
+    margin: 20px;
+    outline: none;
+    padding-top: 10px;
+    overflow-wrap: break-word;
+}
+
+.review-score-input {
+    padding: 10px;
+    margin: 20px;
+    outline: none;
+    text-align: center;
+
+}
+
+#search-game-btn {
+    border: solid 2px #f4426b;
+    border-radius: 50px;
+    padding: 5px;
+    color: aliceblue;
+    background: #252331;
+}
+
+#search-game-btn:hover {
+    cursor: pointer;
+}
+
+.submit-btn {
+    border: solid 2px #f4426b;
+    border-radius: 50px;
+    padding: 5px;
+    color: aliceblue;
+    margin-bottom: 20px;
+}
+
+
+.submit-btn:hover {
+    cursor: pointer;
+}
+
+.blank-warning {
+    color: #f4426b;
+    margin-bottom: 20px;
+}
+
+.no-game-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200px;
+    color: #f4426b;
+    text-decoration: none;
+    font-size: 1.6em;
+    border: #f4426b solid 2px;
+    padding: 5px;
+}

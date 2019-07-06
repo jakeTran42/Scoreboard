@@ -3,7 +3,7 @@ const rp = require('request-promise');
 const axios = require('axios')
 
 // axios.defaults.baseURL = 'https://api-v3.igdb.com/games';
-axios.defaults.headers.get['user-key'] = process.env.IGDB_USER_KEY;
+axios.defaults.headers.get['user-key'] = "ff5463403126ff683d8b1345a689bfcc";
 axios.defaults.headers.get['Accept'] = 'application/json';
 
 module.exports = igdbSearch = async (args) => {
