@@ -97,3 +97,47 @@
     border: #f4426b solid 2px;
     padding: 5px;
 }
+
+.review-wrapper {
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin: 20px 50px 10px 50px;
+    /* padding: 20px; */
+    /* border: 1px solid #202121; */
+    background: #252331;
+    color: aliceblue;
+}
+
+.review-wrapper:hover {
+    cursor: pointer;
+}
+
+.review-preview, .title-preview {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#game-title, #review-title {
+    padding: 10px;
+}
+
+#review-username {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* align-items: center; */
+    padding: 10px;
+}
+
+#review-score {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
