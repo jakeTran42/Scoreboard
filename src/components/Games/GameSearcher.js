@@ -114,22 +114,6 @@ class GameSeacher extends Component {
                     </div>)
                 }}
             </Query>
-            <div className="meta-data">
-                    <div id="data-points">
-                        <div id="title-tag"><div id="game-name" onClick={() => this.setState({ gameMetaData: game })} >{game.name}</div>{this.checkNSFW(game.themes) ? <div id="nsfw-tag">nfsw</div> : ''}</div>
-                        <div id="mode-tags">{game.game_modes.map((mode) => <div id="tag" key={mode.slug}>{mode.name}</div>)}</div>
-                        <div id="theme-tags">{game.themes.map((theme) => <div id="tag" key={theme}>{theme}</div>)}</div>
-                        <div id="game-released-date">Released: {(new Date(game.first_release_date * 1000)).toLocaleDateString()}</div>
-                    </div>
-
-                    <div id="links-traversal">
-                        <Link to={{pathname: '/create', state: {id: game.id, name: game.name}}} >Create Review</Link>
-                    </div>
-                </div>
-
-                <div className="scoreContainer" >
-                    <RatingBar containerWidth={'70%'} fillStyle={'#f4f7f6'}>{game.total_rating}</RatingBar>
-                </div>
         </div>
         )
     }
