@@ -17,6 +17,6 @@
     "prisma-client-lib": "^1.29.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   }
 }
